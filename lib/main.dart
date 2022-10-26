@@ -33,7 +33,6 @@ class DragDropState extends State<DragDrop> {
   late Timer timer;
   int secondsRemaining = 60;
   late AssetsAudioPlayer _assetsAudioPlayer;
-  final List<StreamSubscription> _subscriptions = [];
   final Map<String, bool> score = {};
   int seed = 0;
   bool play = false;
