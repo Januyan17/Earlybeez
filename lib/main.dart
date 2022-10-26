@@ -185,8 +185,8 @@ class DragDropState extends State<DragDrop> {
                                 ),
                           ),
 
-                          child: Image.network(
-                            "https://cdn.britannica.com/92/152292-050-EAF28A45/Bald-eagle.jpg",
+                          child: Image(
+                            image: AssetImage('assets/eagleimg.jpeg'),
                             fit: BoxFit.cover,
                           ),
 
