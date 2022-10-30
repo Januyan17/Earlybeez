@@ -1,7 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
+// ignore_for_file: prefer_const_constructor, sort_child_properties_last
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -40,7 +38,7 @@ class DragDropState extends State<DragDrop> {
   void initState() {
     super.initState();
 
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (secondsRemaining != 0) {
         setState(() {
           secondsRemaining--;
@@ -73,13 +71,42 @@ class DragDropState extends State<DragDrop> {
     ),
   ];
 
-  final Map choices = {
-    'E': "E",
-    'A': "A",
-    'G': "G",
-    'L': "L",
-    'E': "E",
-  };
+  final Map choices = {};
+
+  final List choice = [
+    {
+      'E': "E",
+      'A': "A",
+      'G': "G",
+      'L': "L",
+      'E': "E",
+    },
+    {
+      'E': "E",
+      'L': "L",
+      'E': "E",
+      'P': "P",
+      'H': "H",
+      'A': "A",
+      'N': "N",
+      'T': "T",
+    },
+    {
+      'M': "M",
+      'O': "O",
+      'U': "U",
+      'S': "S",
+      'E': "E",
+    },
+    {
+      'R': "R",
+      'A': "A",
+      'B': "B",
+      'B': "B",
+      'I': "I",
+      'T': "T",
+    },
+  ];
 
   void openPlayer() async {
     await _assetsAudioPlayer.open(
@@ -91,7 +118,7 @@ class DragDropState extends State<DragDrop> {
       play = true;
     });
 
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       setState(() {
         play = false;
       });
@@ -117,7 +144,7 @@ class DragDropState extends State<DragDrop> {
                   padding: const EdgeInsets.only(top: 20, right: 20),
                   child: Text(
                     'You Have $secondsRemaining seconds',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
@@ -125,7 +152,7 @@ class DragDropState extends State<DragDrop> {
                 )
               : Container(
                   child: TextButton(
-                    child: Text(
+                    child: const Text(
                       "Retry",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -143,7 +170,7 @@ class DragDropState extends State<DragDrop> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            child: Icon(Icons.refresh),
+            child: const Icon(Icons.refresh),
             onPressed: () {
               setState(() {
                 score.clear();
@@ -151,7 +178,7 @@ class DragDropState extends State<DragDrop> {
               });
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           FloatingActionButton(
@@ -169,8 +196,8 @@ class DragDropState extends State<DragDrop> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
                       child: GestureDetector(
                         onTap: () {
                           openPlayer();
@@ -180,12 +207,12 @@ class DragDropState extends State<DragDrop> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             border: Border.all(width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                    10.0) //                 <--- border radius here
-                                ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0) //
+                                    ),
                           ),
 
-                          child: Image(
+                          child: const Image(
                             image: AssetImage('assets/eagleimg.jpeg'),
                             fit: BoxFit.cover,
                           ),
@@ -195,69 +222,86 @@ class DragDropState extends State<DragDrop> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: choices.keys
-                          .map((emoji) => Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: Container(
-                                height: 70,
-                                width: 70,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.green),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            10.0) //                 <--- border radius here
-                                        ),
-                                    color: Colors.green),
-                                child: Center(child: _buildDragTarget(emoji)),
-                              )))
-                          .toList()
-                        ..shuffle(Random(seed)),
-                    ),
-                    SizedBox(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                            itemCount: choice.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (emoji, index) {
+                              return Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  child: Container(
+                                    height: 70,
+                                    width: 70,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.green),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(
+                                                10.0) //                 <--- border radius here
+                                            ),
+                                        color: Colors.green),
+                                    child: Center(
+                                        child:
+                                            _buildDragTarget(choice[index][1])),
+                                  ));
+                            },
+                          )
+                        ]),
+                    const SizedBox(
                       height: 50,
                     ),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: choices.keys.map((emoji) {
-                          return Container(
-                            margin: EdgeInsets.all(10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          10.0) //                 <--- border radius here
-                                      ),
-                                  border: Border.all(color: Colors.red),
-                                  color: Colors.red),
-                              child: Draggable(
-                                data: emoji,
-                                child: Emoji(
-                                    emoji: score[emoji] == true ? '✅' : emoji),
-                                feedback: Emoji(emoji: emoji),
-                                childWhenDragging: Emoji(emoji: emoji),
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        ListView.builder(
+                          itemCount: choice.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.all(10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(
+                                            10.0) //                 <--- border radius here
+                                        ),
+                                    border: Border.all(color: Colors.red),
+                                    color: Colors.red),
+                                child: Draggable(
+                                  data: choice,
+                                  child: Emoji(
+                                      emoji: score[choice[index][1]] == true
+                                          ? '✅'
+                                          : choice.toString()),
+                                  feedback:
+                                      Emoji(emoji: choice[index][1].toString()),
+                                  childWhenDragging:
+                                      Emoji(emoji: choice[index][1].toString()),
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList()),
+                            );
+                          },
+                        ),
+                      ],
+                    )
                   ],
                 )
               : Container(
                   child: Center(
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Text(
+                        const Text(
                           "Time Out !!!!",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Lottie.asset('assets/timer.json'),
@@ -282,7 +326,7 @@ class DragDropState extends State<DragDrop> {
         // } else {
         return Text(
           choices[emoji].toString(),
-          style: TextStyle(fontSize: 50),
+          style: const TextStyle(fontSize: 50),
         );
 
         // Container(choices[emoji].toString(), height: 20, width: 50);
@@ -315,7 +359,7 @@ class Emoji extends StatelessWidget {
         // padding: EdgeInsets.all(10),
         child: Text(
           emoji,
-          style: TextStyle(color: Colors.black, fontSize: 50),
+          style: const TextStyle(color: Colors.black, fontSize: 50),
         ),
       ),
     );
